@@ -1,1 +1,6 @@
 .DS_Store
+
+# inner project folders
+Projects/1-Beginner/implementations/**/**/node_modules
+Projects/2-Intermediate/implementations/**/**/node_modules
+Projects/3-Advanced/implementations/**/**/node_modules
