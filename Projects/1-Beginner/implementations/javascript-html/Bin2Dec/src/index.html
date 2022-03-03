@@ -154,7 +154,7 @@
           />
           <div class="result-container">
             <h4>
-              Result: <span id="convertResult" name="convertResult">120</span>
+              Result: <span id="convertResult" name="convertResult">0</span>
             </h4>
           </div>
         </div>
@@ -174,17 +174,47 @@
       const toast = document.getElementsByClassName('toast')[0]
 
       binaryInput.addEventListener('keyup', (value) => {
-        if (value.code !== 'Digit1' && value.code !== 'Digit0') {
+        if (checkIfIsDigit(value.code)) {
           value.target.value = value.target.value.slice(0, -1)
           if (!toast.classList.contains('animated')) {
-            toast.className = 'toast animated'
+            showToast('Insert only binary digits (0 or 1)')
           }
-
-          setTimeout(() => {
-            toast.className = 'toast'
-          }, 3000)
         }
       })
+
+      convertButton.addEventListener('click', () => {
+        const binaryNumber = binaryInput.value
+        if (!binaryNumber) {
+          showToast('Input a value to convert!')
+          return
+        }
+
+        let decimal = 0
+
+        for (let index = 0; index < binaryNumber.length; index++) {
+          decimal = decimal * 2 + Number(binaryNumber[index])
+        }
+
+        convertResult.innerText = decimal
+      })
+
+      function showToast(message) {
+        toast.childNodes[0].parentElement.style.color = '#fff'
+        toast.childNodes[0].parentElement.innerText = message
+        toast.className = 'toast animated'
+        setTimeout(() => {
+          toast.className = 'toast'
+        }, 3000)
+      }
+
+      function checkIfIsDigit(code) {
+        return (
+          code !== 'Digit1' &&
+          code !== 'Digit0' &&
+          code != 'Backspace' &&
+          code != 'Enter'
+        )
+      }
     </script>
   </body>
 </html>
